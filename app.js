@@ -5,10 +5,18 @@ window.addEventListener('load', () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
             long = position.coords.longitude;
-            lat = position.coords.latitude; 
-        })
+            lat = position.coords.latitude;
+            const proxy = 'https://cors-anywhere.herokuapp.com/';
+            const api = 'https://cors-anywhere.herokuapp.com/your api key here/${lat},${long}'
+            console.log(proxy)
 
-    } else {
-        h1.textContent = "Please allow Geolocation we will not spy on you"
+            fetch(api)
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                })
+        })
     }
 })
