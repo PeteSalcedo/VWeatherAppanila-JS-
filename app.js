@@ -11,20 +11,29 @@ window.addEventListener('load', () => {
             let locationTimezone = document.querySelector('.location-timezone');
 
             const proxy = 'https://cors-anywhere.herokuapp.com/';
-            const api = `${proxy}Your api here${lat},${long}`
+            const api = `${proxy}Your api key here/${lat},${long}`
     
             fetch(api)
                 .then(response => {
                     return response.json();
                 })
                 .then(data => {
-                    const {temperature, summary } = data.currently;
+                    const {temperature, summary, icon } = data.currently;
                     //set the dom elements from the api
                     temperatureDegree.textContent = temperature
                     temperatureDescription.textContent = summary;
                     locationTimezone.textContent = data.timezone;
+                    setIcons(icon,document.querySelector('.icon'))
                 })
         })
+    }
+
+    function setIcons(icon, iconID){
+        const skycons = new Skycons({color: "white"})
+        const currentIcon = icon.replace(/-/g, "_").toUpperCase();
+        skycons.play();
+        return skycons.set(iconID,Skycons[currentIcon]);
+        
     }
     
 });
